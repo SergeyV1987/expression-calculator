@@ -4,6 +4,7 @@ function eval() {
 }
 
 function expressionCalculator(expr) {
+
     const split = (expression, operator) => {
         const result = [];
         let braces = 0;
@@ -15,11 +16,15 @@ function expressionCalculator(expr) {
             } else if (curCh == ')') {
                 braces--;
             }
+
             if (braces == 0 && operator == curCh) {
                 result.push(currentChunk);
                 currentChunk = "";
             } else currentChunk += curCh;
         }
+
+        if(braces !== 0 ) throw Error("ExpressionError: Brackets must be paired");
+
         if (currentChunk != "") {
             result.push(currentChunk);
         }
@@ -66,7 +71,6 @@ function expressionCalculator(expr) {
     };
 
     const result = parsePlusSeparatedExpression(expr.replace(/ /g, ""), '+');
-    console.log(result)
 
     return result;
 }
